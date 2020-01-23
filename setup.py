@@ -7,7 +7,7 @@ from setuptools.command.test import test as TestCommand
 
 PACKAGES = find_packages()
 
-# Get version and release info, which is all stored in fast_upfirdn/version.py
+# Get version and release info, which is all stored in mrrt/utils/version.py
 ver_file = os.path.join("mrrt", "utils", "version.py")
 with open(ver_file) as f:
     exec(f.read())
