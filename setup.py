@@ -37,6 +37,7 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+cmdclass = {"test": PyTest}
 
 opts = dict(
     name=NAME,
@@ -58,6 +59,7 @@ opts = dict(
     python_requires=PYTHON_REQUIRES,
     setup_requires=SETUP_REQUIRES,
     requires=REQUIRES,
+    cmdclass=cmdclass,
 )
 
 if __name__ == "__main__":
