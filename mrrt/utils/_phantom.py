@@ -6,7 +6,7 @@ from numpy.testing import assert_allclose
 from ._masking import ArrayMasker
 
 
-__all__ = ["ellipse_im", "ImageGeometry", "multispectral_phantom"]
+__all__ = ["ellipse_im", "ImageGeometry"]
 
 
 def _shepp_logan_parameters(xfov, yfov):
@@ -195,27 +195,6 @@ def ellipse_im(
         replace=False,
     )
     return phantom, params
-
-
-def multispectral_phantom(nx, ny, v1=3, v2=1, v3=2, over=1):
-    e1 = [0, 0, 0.9, 0.7, 0, v1]
-    e2 = [0, 0, 0.8, 0.6, 0, v2]
-    e3 = [-0.4, 0, 0.05, 0.05, 0, v3]
-    e4 = [-0.2, 0, 0.1, 0.1, 0, v3]
-    e5 = [0.3, 0, 0.2, 0.1, 0, v3]
-    params = np.stack([e1, e2, e3, e4, e5], axis=0)
-    params[:, [0, 2]] = params[:, [0, 2]] * nx / 2
-    params[:, [1, 3]] = params[:, [1, 3]] * ny / 2
-    phantom, params = _ellipse_im_slow(
-        shape=(nx, ny),
-        params=params,
-        distances=(1, 1),
-        offsets=(0, 0),
-        rot=0,
-        over=over,
-        replace=True,
-    )
-    return phantom
 
 
 def _tuple_or_none(x, ndim):

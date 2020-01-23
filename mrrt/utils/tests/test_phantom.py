@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from mrrt.utils import ImageGeometry, ellipse_im, downsample
+from mrrt.utils import ImageGeometry, ellipse_im
 from mrrt import utils
 
 array_modules = [np]
@@ -95,9 +95,3 @@ def test_ellipse_im(show_fig=False):
     assert x1.shape == ig.shape
     x2, params = ellipse_im(ig, "shepplogan-mod", oversample=2)
     assert x2.shape == ig.shape
-
-
-def test_multispectral():
-    nx, ny = 128, 64
-    p = utils.multispectral_phantom(nx, ny)
-    assert p.shape == (nx, ny)
