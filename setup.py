@@ -1,11 +1,22 @@
 #!/usr/bin/env python
+import os
 import sys
 
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
-import versioneer
+PACKAGES = find_packages()
 
+# Get version and release info, which is all stored in fast_upfirdn/version.py
+ver_file = os.path.join("mrrt", "utils", "version.py")
+with open(ver_file) as f:
+    exec(f.read())
+# Give setuptools a hint to complain if it's too old a version
+# 24.2.0 added the python_requires option
+# Should match pyproject.toml
+SETUP_REQUIRES = ["setuptools >= 24.2.0"]
+# This enables setuptools to install wheel on-the-fly
+SETUP_REQUIRES += ["wheel"] if "bdist_wheel" in sys.argv else []
 
 class PyTest(TestCommand):
     user_options = [("pytest-args=", "a", "Arguments to pass to py.test")]
@@ -26,29 +37,28 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
-CLASSIFIERS = [
-    "Development Status :: 4 - Beta",
-    "Environment :: Console",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Topic :: Scientific/Engineering",
-]
 
-cmdclass = versioneer.get_cmdclass()
-cmdclass.update({"test": PyTest})
-
-setup(
-    name="mrrt.utils",
-    namespace_package=["mrrt"],
-    cmdclass=cmdclass,
-    version=versioneer.get_version(),
-    description="MRI-related utilities implemented in Python",
-    author="Gregory Lee",
-    author_email="grlee77@gmail.com",
-    url="https://github.com/mritools/mrrt.utils",
-    packages=find_packages(),
-    zip_safe=False,
-    python_requires=">= 3.6",
+opts = dict(
+    name=NAME,
+    maintainer=MAINTAINER,
+    maintainer_email=MAINTAINER_EMAIL,
+    description=DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
+    url=URL,
+    download_url=DOWNLOAD_URL,
+    license=LICENSE,
+    classifiers=CLASSIFIERS,
+    author=AUTHOR,
+    author_email=AUTHOR_EMAIL,
+    platforms=PLATFORMS,
+    version=VERSION,
+    packages=PACKAGES,
+    package_data=PACKAGE_DATA,
+    install_requires=REQUIRES,
+    python_requires=PYTHON_REQUIRES,
+    setup_requires=SETUP_REQUIRES,
+    requires=REQUIRES,
 )
+
+if __name__ == "__main__":
+    setup(**opts)
