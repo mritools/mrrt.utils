@@ -12,4 +12,4 @@ develop: build
 	python -m pip install -e . -v  --no-build-isolation --no-use-pep517
 
 test:
-	py.test --pyargs fast_upfirdn --cov=fast_upfirdn --cov-report term-missing --cov-report html
+	py.test --pyargs mrrt.utils --cov=mrrt.utils --cov-report term-missing --cov-report html
