@@ -1,0 +1,4 @@
+[run]
+omit =
+    mrrt/utils/tests/*
+    mrrt/utils/version.py
