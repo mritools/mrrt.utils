@@ -26,7 +26,7 @@ CLASSIFIERS = [
 ]
 
 # Description should be a one-liner:
-description = "mrrt.utils: CPU & GPU implementations of scipy.signal.upfirdn"
+description = "mrrt.utils: common utilities supporting other mritools packages"
 # Long description will go up on the pypi page
 long_description = """
 
