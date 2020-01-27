@@ -77,6 +77,7 @@ def test_free_pooled_gpu_memory():
     with pytest.raises(ValueError):
         utils.free_pooled_gpu_memory(pool="invalid")
 
+
 @pytest.mark.skipif(not config.have_cupy, reason="cupy not available")
 def test_free_pooled_pinned_memory():
     a = cupy.arange(int(1e6))

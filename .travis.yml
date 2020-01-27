@@ -1,0 +1,66 @@
+language: python
+os: linux
+
+jobs:
+  include:
+    - os: linux
+      python: 3.6
+      env:
+        - NUMPYSPEC="numpy==1.14.5"
+    - os: linux
+      python: 3.7
+      env:
+        - NUMPYSPEC=numpy
+        - USE_SDIST=1
+    - os: linux
+      python: 3.7
+      env:
+        - NUMPYSPEC=numpy
+        - USE_WHEEL=1
+    - os: linux
+      python: 3.8
+      env:
+        - NUMPYSPEC=numpy
+    # - os: osx
+    #   osx_image: xcode7.3
+    #   language: objective-c
+    #   env:
+    #     - NUMPYSPEC=numpy
+
+cache: pip
+
+before_install:
+  - which python; python --version
+  - pip install --upgrade pip
+  - pip install --upgrade wheel
+  - pip install $NUMPYSPEC
+  - pip install pytest pytest-cov coverage codecov
+
+script:
+  # Define a fixed build dir so next step works
+  - |
+    if [ "${USE_WHEEL}" == "1" ]; then
+        # Need verbose output or TravisCI will terminate after 10 minutes
+        pip wheel . -v
+        pip install mrrt.utils*.whl -v
+        mkdir for_test
+        pushd for_test
+        pytest --pyargs mrrt.utils
+        popd
+    elif [ "${USE_SDIST}" == "1" ]; then
+        python setup.py sdist
+        # Move out of source directory to avoid finding local pywt
+        pushd dist
+        pip install mrrt.utils* -v
+        pytest --pyargs mrrt.utils
+        popd
+    else
+        pip install -e . -v
+        mkdir for_test
+        pushd for_test
+        pytest --pyargs pywt --cov=pywt --cov-config=../.coveragerc
+        cp .coverage ..
+        popd
+    fi
+
+

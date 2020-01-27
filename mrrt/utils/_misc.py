@@ -325,7 +325,7 @@ def rss(a, axis=-1, keepdims=False, xp=None):
         root sum of squares array
     """
     xp, on_gpu = get_array_module(a, xp)
-    if a.dtype.kind == 'c':
+    if a.dtype.kind == "c":
         a = (xp.conj(a) * a).real
     else:
         a = a * a
