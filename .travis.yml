@@ -25,11 +25,12 @@ jobs:
       env:
         - NUMPYSPEC=numpy
         - SCIPYSPEC=scipy
-    # - os: osx
-    #   osx_image: xcode7.3
-    #   language: objective-c
-    #   env:
-    #     - NUMPYSPEC=numpy
+    - os: osx
+      osx_image: xcode7.3
+      language: generic
+      env:
+        - NUMPYSPEC=numpy
+        - SCIPYSPEC=scipy
 
 cache: pip
 
