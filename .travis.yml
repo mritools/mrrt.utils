@@ -1,3 +1,5 @@
+# After changing this file, check it on:
+#   http://lint.travis-ci.org/
 language: python
 os: linux
 
@@ -38,6 +40,7 @@ before_install:
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       brew update
+      brew install openssl readline
       brew outdated pyenv || brew upgrade pyenv
       brew install pyenv-virtualenv
       pyenv install $PYTHON
