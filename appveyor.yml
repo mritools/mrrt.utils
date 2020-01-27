@@ -1,0 +1,43 @@
+# AppVeyor.com is a Continuous Integration service to build and run tests under
+# Windows
+# https://ci.appveyor.com/project/PyWavelets/pywt
+
+# This file is built on the template here:
+# http://python-packaging-user-guide.readthedocs.org/en/latest/appveyor/
+
+environment:
+  matrix:
+    - PYTHON: "C:\\Python36"
+    - PYTHON: "C:\\Python36-x64"
+    - PYTHON: "C:\\Python37-x64"
+    - PYTHON: "C:\\Python38-x64"
+
+build: off
+
+install:
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip"
+  - "%PYTHON%\\python.exe -m pip install --upgrade wheel"
+  - "%PYTHON%\\python.exe -m pip install
+     scipy --cache-dir c:\\tmp\\pip-cache"
+  - "%PYTHON%\\python.exe -m pip install
+     numpy --cache-dir c:\\tmp\\pip-cache"
+  - "%PYTHON%\\python.exe -m pip install
+     pytest coverage pytest-cov codecov --cache-dir c:\\tmp\\pip-cache"
+
+test_script:
+  - "%PYTHON%\\python.exe -m pip install -e . -v"
+  - "cd examples"
+  - "%PYTHON%\\Scripts\\pytest --pyargs mrrt.utils"
+  - "cd .."
+
+after_test:
+  - "%PYTHON%\\python.exe setup.py bdist_wheel"
+
+artifacts:
+  # Archive the generated wheel package in the ci.appveyor.com build report.
+  - path: dist\*
+
+cache:
+  # Cache can be manually cleared like this:
+  # https://github.com/appveyor/ci/issues/207
+  - "c:\\tmp\\pip-cache"
