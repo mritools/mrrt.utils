@@ -72,6 +72,7 @@ class ArrayMasker(object):
     (or embed) values corresponding to the mask from arrays of the
     corresponding shape.
     """
+
     def __init__(self, mask, mask_first_axes=True, order=None, xp=None):
         self.mask = mask
         self.mask_first_axes = mask_first_axes
@@ -211,9 +212,7 @@ class ArrayMasker(object):
         return z
 
 
-def mask(
-    x, mask, order="F", squeeze_output=True, xp=None
-):
+def mask(x, mask, order="F", squeeze_output=True, xp=None):
     """Extract masked values from x.
 
     Parameters

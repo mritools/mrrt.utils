@@ -45,9 +45,7 @@ def _shepp_logan_parameters(xfov, yfov):
     return params
 
 
-def _ellipse_im(
-    shape, params, distances, offsets, rot, over, replace
-):
+def _ellipse_im(shape, params, distances, offsets, rot, over, replace):
     """Generate an Ellipse-based phantom based on params."""
     nx, ny = shape
     dx, dy = distances
@@ -99,12 +97,7 @@ def _ellipse_im(
 
 
 def ellipse_im(
-    ig,
-    params="shepplogan-mod",
-    rot=0,
-    oversample=1,
-    scale=1.0,
-    fov=250,
+    ig, params="shepplogan-mod", rot=0, oversample=1, scale=1.0, fov=250,
 ):
     """Generate an ellipse phantom image from parameters.
 
@@ -176,7 +169,6 @@ def ellipse_im(
         elif params == "shepplogan-emis":
             params = _shepp_logan_parameters(fov, fov)
             params[:, 5] = [1, 1, -2, 2, 3, 4, 5, 6, 1, 1]
-            replace = False
             params = np.array(params)
 
     params = np.asanyarray(params)

@@ -122,15 +122,17 @@ def test_compare_outer_sum():
 
 @pytest.mark.parametrize(
     "xp, dtype, axis, keepdims",
-    product(array_modules,
-            [np.float32, np.float64, np.complex64, np.complex128],
-            [0, (-1,), (0, 1)],
-            [False, True])
+    product(
+        array_modules,
+        [np.float32, np.float64, np.complex64, np.complex128],
+        [0, (-1,), (0, 1)],
+        [False, True],
+    ),
 )
 def test_rss(xp, dtype, axis, keepdims):
     rstate = xp.random.RandomState(0)
     x = rstate.randn(16, 32).astype(dtype)
-    if x.dtype.kind == 'c':
+    if x.dtype.kind == "c":
         x = x + 1j * rstate.randn(16, 32).astype(dtype)
     tol = np.finfo(dtype).eps * 10
 
@@ -141,7 +143,7 @@ def test_rss(xp, dtype, axis, keepdims):
 
     try:
         y_expected = np.sqrt(
-            np.sum(np.abs(x)**2, axis=axis, keepdims=keepdims)
+            np.sum(np.abs(x) ** 2, axis=axis, keepdims=keepdims)
         )
         y = utils.rss(x, axis=axis, keepdims=keepdims)
         if keepdims:
@@ -152,6 +154,6 @@ def test_rss(xp, dtype, axis, keepdims):
             cupy.cuda.cub_enabled = cub_value
 
 
-@pytest.mark.parametrize('seq', [(1, 2, 3), [1, 2, 3], np.arange(5)])
+@pytest.mark.parametrize("seq", [(1, 2, 3), [1, 2, 3], np.arange(5)])
 def test_prod(seq):
     assert utils.prod(seq) == np.prod(seq)
