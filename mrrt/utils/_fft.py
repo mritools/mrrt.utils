@@ -38,7 +38,7 @@ except ImportError:
 
     fft_module = np.fft
     # next_fast_len from older fftpack is a reasonable fallback choice
-    fftpack = scipy.fftpack.next_fast_len
+    next_fast_len = scipy.fftpack.next_fast_len
 
 from ._cupy import get_array_module
 from ._misc import define_if
